@@ -2,7 +2,7 @@
 
 ## Q. How can I register
 
-A. Kindly click here to register.
+A. Kindly [click here](https://bit.ly/2LruITq) to register.
 
 ## Q. I cannot view my data eventhough I have registered
 
