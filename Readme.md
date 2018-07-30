@@ -1,5 +1,5 @@
 
-![alt text](https://www.google.ca/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiV-8Ha0sbcAhVSMn0KHetjA9AQjRx6BAgBEAU&url=https%3A%2F%2Ftwitter.com%2FKUHIS_official%2Fstatus%2F1008348857766432769&psig=AOvVaw15RmLBZm1Qs9KivrDmhiIu&ust=1533033961365026)
+![Kuhis logo](https://pbs.twimg.com/profile_images/878295391925669888/FXq1y5fJ_400x400.jpg)
 # Questions and Answers for Technical issues on the register
 
 ## Q. How can I register
