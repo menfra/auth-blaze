@@ -1,23 +1,128 @@
+# Auth-Blaze
 
-![Kuhis logo](https://pbs.twimg.com/profile_images/878295391925669888/FXq1y5fJ_400x400.jpg)
-# Questions and Answers for Technical issues on the register
+**Auth-Blaze** is a middleware package for C# .NET applications that enforces zero trust principles by verifying identity, device, and contextual information for every request. Auth-Blaze provides robust security through multi-factor authentication (MFA), IP geolocation restrictions, and token validation for API requests, ensuring that only trusted users and devices gain access.
 
-## 1. How can I register
+## Key Features
 
-Ans. Kindly [click here](https://bit.ly/2LruITq) to register.
+- **Zero Trust Verification**: Authenticates identity, device, and request context to enforce zero trust policies.
+- **Multi-Factor Authentication (MFA)**: Supports MFA to strengthen user authentication.
+- **IP Geolocation-Based Restrictions**: Limits access based on the user’s geographic location.
+- **Access Token Validation**: Validates access tokens for every API request to confirm authorization.
+- **Customizable Policies**: Easily configure access policies and thresholds for MFA, IP checks, and token validation.
 
-## 2. I cannot view my data eventhough I have registered
+## Getting Started
 
-Ans. whatsapp opens the document with its internal browser which causes the excel sheet to be cached. 
-   This for some reason prevents the document to refresh when u try to access it the second time. To resolve this
-   Please use the procedure below.
+### Installation
 
-   Copy the link below into your default browser on either your phone or PC. https://docs.google.com/spreadsheets/d/16HaqVLVZZMpfvWfEPBXQTsdumUno2bDH8zGHOGhovRg/edit?usp=sharing
+Install Auth-Blaze via NuGet Package Manager Console:
 
-## 3. I want to make a correction, How can I do that.
+```bash
+Install-Package Auth-Blaze
+```
 
-Ans. Kindly send your request to either @Frank or @Kwaku Duah as a private message. There are access restrictions on the data to protect its integrity
+Or, add it to your .csproj file:
+```bash
+<PackageReference Include="Auth-Blaze" Version="1.0.0" />
+```
 
-## 4. I have a different question about the registration system, how do I get it addressed.
+## Setup and Configuration
+To begin, initialize Auth-Blaze in your application’s startup file (e.g., Startup.cs) and configure the middleware with your desired zero trust policies.
 
-Ans. Kindly write to the Admin @Kwaku Duah or @Frank.
+```csharp
+// Startup.cs
+using AuthBlaze;
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddAuthBlaze(options =>
+        {
+            options.EnableMFA = true;                     // Enable Multi-Factor Authentication (MFA)
+            options.RestrictByGeolocation = true;         // Enable IP geolocation-based access restrictions
+            options.TokenValidation = true;               // Validate access tokens for API requests
+            options.AllowedGeolocations = new List<string> { "US", "DE", "CA" }; // Allowed IP geolocations
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAuthBlaze(); // Enable Auth-Blaze middleware in the request pipeline
+    }
+}
+```
+
+## Usage
+Auth-Blaze automatically validates requests based on identity, device, and context. When applied as middleware, it intercepts each request to ensure compliance with zero trust policies before the request reaches application endpoints.
+
+### Example 1: Enforcing Multi-Factor Authentication (MFA)
+Auth-Blaze triggers MFA checks during login. If MFA is enabled, users are required to complete an additional verification step, such as entering a code from an authenticator app.
+
+```csharp
+// Startup.cs
+using AuthBlaze;
+
+public class LoginService
+{
+    private readonly IAuthBlaze _authBlaze;
+
+    public LoginService(IAuthBlaze authBlaze)
+    {
+        _authBlaze = authBlaze;
+    }
+
+    public async Task<bool> LoginAsync(string username, string password)
+    {
+        bool isAuthenticated = await _authBlaze.AuthenticateAsync(username, password);
+
+        if (isAuthenticated)
+        {
+            bool mfaResult = await _authBlaze.EnforceMFAAsync(username);
+            return mfaResult;
+        }
+        return false;
+    }
+}
+```
+
+### Example 2: Restricting Access Based on Geolocation
+Auth-Blaze can block access if the user’s IP geolocation does not match the allowed locations configured in the setup.
+
+```csharp
+using AuthBlaze;
+
+public class RequestService
+{
+    private readonly IAuthBlaze _authBlaze;
+
+    public RequestService(IAuthBlaze authBlaze)
+    {
+        _authBlaze = authBlaze;
+    }
+
+    public void HandleRequest(HttpContext context)
+    {
+        if (!_authBlaze.IsGeolocationAllowed(context))
+        {
+            // Reject request or return a "403 Forbidden" response
+            context.Response.StatusCode = 403;
+            context.Response.WriteAsync("Access denied based on geolocation.");
+        }
+    }
+}
+```
+
+## Example Scenarios
+1. Multi-Factor Authentication: Strengthens authentication by requiring MFA for sensitive operations.
+2. IP Geolocation Blocking: Restricts access from specific countries or regions.
+3. Access Token Validation: Ensures that only authorized requests with valid tokens are processed.
+4. Contextual Device Verification: Confirms that requests originate from trusted devices, helping to prevent session hijacking.
+
+# Contributing
+We welcome contributions! Please open an issue or submit a pull request if you have suggestions or improvements.
+
+# License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+#Contact
+For questions or feedback, please contact [your-email@example.com].
