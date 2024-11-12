@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth-blaze", "auth-blaze\auth-blaze.csproj", "{5455A897-9320-4A0B-8A80-41D1AC981CC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5455A897-9320-4A0B-8A80-41D1AC981CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5455A897-9320-4A0B-8A80-41D1AC981CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5455A897-9320-4A0B-8A80-41D1AC981CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5455A897-9320-4A0B-8A80-41D1AC981CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {061F8570-25FD-4440-80EE-61F2EB0C66D4}
+	EndGlobalSection
+EndGlobal
